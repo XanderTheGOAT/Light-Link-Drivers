@@ -36,6 +36,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="LightLinkDLL">
+      <HintPath>..\..\..\..\LLD\DeviceSDKs\LogitechSDK\bin\Debug\LightLinkDLL.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -53,6 +56,7 @@
     <Compile Include="FileIODeclarations.cs" />
     <Compile Include="Hid.cs" />
     <Compile Include="HidDeclaration.cs" />
+    <Compile Include="Models\Command.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Device.cs" />
