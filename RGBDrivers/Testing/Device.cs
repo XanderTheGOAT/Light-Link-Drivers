@@ -472,12 +472,6 @@ namespace RGBLibrary
                     outFeatureReportBuffer[0] = 0;
 
                     TransferCommandsToBuffer(outFeatureReportBuffer, commands);
-                    int index = 0;
-                    foreach (var item in outFeatureReportBuffer)
-                    {
-                        Console.WriteLine(++index + ".) " + item);
-                    }
-                    Console.ReadLine();
                     //  Store the report data following the report ID.
                     //  Use the data in the combo boxes on the form.
                     //  Write a report to the device
@@ -549,12 +543,6 @@ namespace RGBLibrary
                     //  Store the report data following the report ID.
                     //  Use the data in the combo boxes on the form.
                     TransferCommandsToBuffer(outputReportBuffer, commands);
-                    int index = 0;
-                    foreach (var item in outputReportBuffer)
-                    {
-                        Console.WriteLine(++index +".) "+item);
-                    }
-                    Console.ReadLine();
                     //  Write a report.
                     Boolean success;
 

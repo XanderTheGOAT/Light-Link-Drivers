@@ -37,7 +37,6 @@ namespace RGBLibrary.Models
 
         public void AddCommand(byte command)
         {
-            command = (byte)Convert.ToInt32(command+"",16);
             if (command < 0)//Make custom exception
                 throw new Exception("Command must be a positive number");
             CommandList.Add(command);
