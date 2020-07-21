@@ -95,8 +95,6 @@ namespace RGBLibrary
                 if (queryObj["PNPDeviceID"].ToString().Contains(deviceIdString))
                 {
                     _deviceDetected = true;
-                    Console.WriteLine("--------");
-                    Console.WriteLine("My device found (WMI):");
                     // Display device properties.
 
                     foreach (WmiDeviceProperties wmiDeviceProperty in Enum.GetValues(typeof(WmiDeviceProperties)))
@@ -107,7 +105,6 @@ namespace RGBLibrary
             }
             if (!_deviceDetected)
             {
-                Console.WriteLine("Device not found");
             }
             return _deviceDetected;
         }
@@ -154,7 +151,6 @@ namespace RGBLibrary
             Guid hidGuid = _myHid.GetHidGuid();
 
             String functionName = "GetHidGuid";
-            Console.WriteLine("  GUID for system HIDs: " + hidGuid.ToString());
 
             //  Fill an array with the device path names of all attached HIDs.
 
@@ -174,7 +170,6 @@ namespace RGBLibrary
                     _hidHandle = _myHid.OpenHandle(devicePathName[memberIndex], false);
 
                     functionName = "CreateFile";
-                    Console.WriteLine("  Returned handle: " + _hidHandle);
 
                     if (!_hidHandle.IsInvalid)
                     {
@@ -187,21 +182,12 @@ namespace RGBLibrary
 
                         if (success)
                         {
-                            Console.WriteLine("  HIDD_ATTRIBUTES structure filled without error.");
-                            Console.WriteLine("  Structure size: " + _myHid.DeviceAttributes.Size);
-                            Console.WriteLine("  Vendor ID: " + Convert.ToString(_myHid.DeviceAttributes.VendorID, 16));
-                            Console.WriteLine("  Product ID: " + Convert.ToString(_myHid.DeviceAttributes.ProductID, 16));
-                            Console.WriteLine("  Version Number: " + Convert.ToString(_myHid.DeviceAttributes.VersionNumber, 16));
-
                             if ((_myHid.DeviceAttributes.VendorID == _myVendorId) && (_myHid.DeviceAttributes.ProductID == _myProductId))
                             {
                                 Debug.WriteLine("  Handle obtained to my device");
 
                                 //  Display the information in form's list box.
 
-                                Console.WriteLine($"Handle obtained to my device:" +
-                                    $"\r\n\tVendor ID = {Convert.ToString(_myHid.DeviceAttributes.VendorID, 16)}" +
-                                    $"\r\n\tProduct ID = {Convert.ToString(_myHid.DeviceAttributes.ProductID, 16)}");
                                 _deviceHandleObtained = true;
 
                                 myDevicePathName = devicePathName[memberIndex];
@@ -275,10 +261,6 @@ namespace RGBLibrary
                     _myHid.FlushQueue(_hidHandle);
                 }
             }
-            else
-            {
-                Console.WriteLine("Device not found");
-            }
             return _deviceHandleObtained;
         }
 
@@ -291,7 +273,6 @@ namespace RGBLibrary
             _myHid.GetNumberOfInputBuffers(_hidHandle, ref numberOfInputBuffers);
 
             //  Display the result in the console.
-            Console.WriteLine(Convert.ToString(numberOfInputBuffers));
         }
 
         public void RequestToGetFeatureReport()
@@ -422,21 +403,10 @@ namespace RGBLibrary
                                 if (bytesRead > 0)
                                 {
                                     success = true;
-                                    Debug.Print("bytes read (includes report ID) = " + Convert.ToString(bytesRead));
                                 }
                             }
                         }
                     }
-                    else
-                    {
-                        Console.WriteLine("No attempt to read an Input report was made.");
-                        Console.WriteLine("The HID doesn't have an Input report.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Invalid handle");
-                    Console.WriteLine("No attempt to write an Output report or read an Input report was made.");
                 }
 
                 if (!success)
@@ -483,12 +453,6 @@ namespace RGBLibrary
                         CloseCommunications();
                     }
                 }
-
-                else
-                {
-                    Console.WriteLine("The HID doesn't have a Feature report.");
-                }
-
             }
             _transferInProgress = false;
 
@@ -598,11 +562,6 @@ namespace RGBLibrary
                     }
                 }
             }
-            else
-            {
-                Console.WriteLine("The HID doesn't have an Output report.");
-            }
-
         }
 
         private void FillBufferWithTemporaryNumber(byte[] outputReportBuffer)
@@ -618,9 +577,7 @@ namespace RGBLibrary
         /// </summary>
         private void OnWriteTimeout()
         {
-            Console.WriteLine("The attempt to write a report timed out.");
             CloseCommunications();
-            Console.WriteLine();
             _transferInProgress = false;
             _sendOrGet = SendOrGet.Get;
         }
@@ -633,7 +590,6 @@ namespace RGBLibrary
 
         private void OnReadTimeout()
         {
-            Console.WriteLine("The report timed out\r\n");
             CloseCommunications();
             _transferInProgress = false;
             _sendOrGet = SendOrGet.Send;
